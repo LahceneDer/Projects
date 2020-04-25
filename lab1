@@ -1,0 +1,23 @@
+
+#!/usr/bin/env python3
+from PIL import Image, ImageFile
+import os
+import subprocess
+import glob
+
+src = os.listdir('/home/student-04-3371f833c22c/images')
+for file in src:
+ if 'ic' in file:
+    outfile = os.path.splitext(file)[0] 
+    source = "/home/student-04-3371f833c22c/images/"+outfile
+    print(source)
+    try:
+      with Image.open(source) as im :
+       step1 = im.resize((128,128))
+       step2 = step1.rotate(90)
+       rgb_im = step2.convert('RGB')
+       rgb_im.save(source,'JPEG')
+       subprocess.call(['cp',source,'/opt/icons/'])
+    except IOError:
+      print("cannot create ", file)
+
